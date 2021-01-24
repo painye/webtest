@@ -45,7 +45,7 @@ public class MyServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        boolean flag = ss.rejister(stu);
+        boolean flag  = ss.rejister(stu);
 
         //服务器返回一个resopnse，做出一个弹窗表明注册成功
         response.getWriter().write("<script>\n" +
