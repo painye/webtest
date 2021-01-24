@@ -26,11 +26,14 @@ public class MyServlet extends HttpServlet {
         String sage = request.getParameter("sage");
         String ssex = request.getParameter("ssex");
         //将从前端接收到的数据进行适当的类型转换，并将数据封装在对象里
+        Integer age=null;
         try {
             Class clazz = Class.forName("entity.Student");
             Object obj=clazz.newInstance();
             stu = (Student) obj;
-            Integer age=Integer.valueOf(sage);
+            if(sage!=""){
+                age =Integer.valueOf(sage);
+            }
             stu.setSno(sno);
             stu.setSname(sname);
             stu.setSsex(ssex);

@@ -29,15 +29,18 @@ public class JdbcUtil {
     static {//静态代码块在类加载的时候就被执行，且执行一次，刚好驱动也只用注册一次
         try {
             //1、注册驱动
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             log.info("注册驱动成功");
+            System.out.println("注册驱动成功");
         } catch (ClassNotFoundException e) {
+            System.out.println("注册驱动失败");
+            e.printStackTrace();
             log.error("注册驱动出错", e);
         }
     }
 
     public static boolean getConnection(){
-        log.info("现在正在进行连接");
+        //log.info("现在正在进行连接");
         //2、获取连接
         boolean flag = false;
         ResourceBundle bundle = ResourceBundle.getBundle("util\\MyJdbc");
@@ -48,9 +51,12 @@ public class JdbcUtil {
             password=bundle.getString("passWord");
             con = DriverManager.getConnection(url, user, password);
             log.info("获取连接成功");
+            System.out.println("获取连接成功");
             flag = true;
         } catch (SQLException e) {
             log.error("获取连接失败", e);
+            System.out.println("获取连接失败");
+            e.printStackTrace();
         }
         return flag;
     }
@@ -59,6 +65,7 @@ public class JdbcUtil {
     public static <T>  boolean insert(String sql, T t){
         log.info("当前准备执行向数据库插入的操作");
         try {
+            System.out.println(sql);
             ps = con.prepareStatement(sql);
             //sql = insert into Student (sno, sname, ssex, sage, sdept) values (?, ?, ?, ?, ?);
             //将sql以空格分开，利用反射确定类名后序需要添加的属性的值
@@ -87,13 +94,19 @@ public class JdbcUtil {
             }
         } catch (SQLException e) {
             log.error("PS获取出错",e);
+            e.printStackTrace();
+
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
             log.error("没有找到这个类",e);
         } catch (NoSuchMethodException e) {
+            e.printStackTrace();
             log.error("没有找到需要的方法", e);
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
             log.error("没有访问权限", e);
         } catch (InvocationTargetException e) {
+            e.printStackTrace();
             log.error("俺也不知道这个是什么异常", e);
         }
         return true;
@@ -105,6 +118,7 @@ public class JdbcUtil {
             try {
                 rs.close();
             } catch (SQLException e) {
+                e.printStackTrace();
                 log.error("关闭资源出错", e);
             }
         }
@@ -112,6 +126,8 @@ public class JdbcUtil {
             try {
                 ps.close();
             } catch (SQLException e) {
+                e.printStackTrace();
+
                 log.error("关闭资源出错", e);
             }
         }
@@ -119,10 +135,13 @@ public class JdbcUtil {
             try {
                 con.close();
             } catch (SQLException e) {
-                log.error("关闭资源出错", e);
+
+                e.printStackTrace();
+//log.error("关闭资源出错", e);
             }
         }
-        log.info("关闭资源成功");
+        //log.info("关闭资源成功");
+
         return true;
     }
 }
