@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+    <form action="rejister">
+        <table style="margin: auto">
+            <tr>
+                <td>姓名: <input type="text" name="sname" required></td>
+            </tr>
+            <tr>
+                <td>学号: <input type="password" name="sno" oninput = "value=value.replace(/[^\d]/g,'')"  maxlength="9" required></td>
+            </tr>
+            <tr>
+                <td>性别:
+                    <label><input type="radio" name="ssex" value="男"  checked >男</label>
+                    <label><input type="radio" name="ssex" value="女">女</label>
+                </td>
+            </tr>
+            <tr>
+                <td>年龄: <input type="number" name="sage"></td>
+            </tr>
+            <tr>
+                <td>专业: <input type="text" name="sdept"></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit">
+                </td>
+                <td>
+                    <input type="reset">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+</html>
