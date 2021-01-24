@@ -13,19 +13,18 @@ public class StudentDao {
      * @param
      * @return
      */
-       public static void main (String[] args ){
-        boolean flag = false;
-        Student stu=new Student();
-        stu.setSno("201215161");
-        stu.setSname("何肖钢");
-        stu.setSsex("女");
-        stu.setSdept("SD");
-        System.out.println(stu);
-        String sql = "insert into Student values (?, ?, ?, ?, ?)";
-        JdbcUtil.getConnection();
-        JdbcUtil.insert(sql, stu);
-        JdbcUtil.closeConnection();
+    public static void main (String[] args ){
+    boolean flag = false;
+    Student stu=new Student();
+    stu.setSno("201215161");
+    stu.setSname("何肖钢");
+    stu.setSsex("女");
+    stu.setSdept("SD");
+    System.out.println(stu);
+    String sql = "insert into Student values (?, ?, ?, ?, ?)";
 
+    StudentDao sdao= new StudentDao();
+    sdao.login(stu);
 
     }
 
@@ -54,5 +53,13 @@ public class StudentDao {
         boolean flag = JdbcUtil.insert(sql, stu);
         JdbcUtil.closeConnection();
         return flag;
+    }
+
+    public boolean login(Student stu){
+           String sql = "select * from Student where sno = ? and sname = ?";
+           JdbcUtil.getConnection();
+           boolean flag=JdbcUtil.login(sql, stu);
+           JdbcUtil.closeConnection();
+           return flag;
     }
 }

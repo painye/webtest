@@ -31,7 +31,7 @@ public class MyServlet extends HttpServlet {
             Class clazz = Class.forName("entity.Student");
             Object obj=clazz.newInstance();
             stu = (Student) obj;
-            if(sage!=""){
+            if(sage!=""&&sage!=null){
                 age =Integer.valueOf(sage);
             }
             stu.setSno(sno);
@@ -47,13 +47,22 @@ public class MyServlet extends HttpServlet {
         } catch (InstantiationException e) {
             e.printStackTrace();
         }
-
-        boolean flag  = ss.rejister(stu);
+        String target=request.getRequestURI();
+        ///webtest_war_exploded/html/student/Login
+        System.out.println(target);
+        String s=null;
+        String service = target.substring(target.lastIndexOf('/')+1);
+        System.out.println(service);
+        switch (service){
+            case "Login": s = ss.login(stu); break;
+            case "rejister":  s = ss.rejister(stu);break;
+        }
 
         //服务器返回一个resopnse，做出一个弹窗表明注册成功
-        response.getWriter().write("<script>\n" +
-                "    alert(\"注册成功"+sname+"\")\n" +
-                "</script>");
+       response.getWriter().write("<script>\n" +
+               "    alert(\""+ s +"\");\n" +
+               "</script>");
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
